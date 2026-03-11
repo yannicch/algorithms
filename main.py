@@ -1,11 +1,7 @@
-from time import sleep
-
-from PyQt6.QtWidgets import QGraphicsTextItem, QMainWindow, QApplication, QLabel, QFrame, QGraphicsView, QGraphicsScene, QVBoxLayout, QGraphicsRectItem
-from PyQt6.QtCore import QTimer
-from PyQt6.QtGui import QBrush, QColor
-from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtWidgets import QMainWindow, QApplication
 from binary import BinarySearchVisualizer
-import math
+from jump import JumpSearchVisualizer
+from dynamic import DynamicVisualizer
 import sys
 
 
@@ -59,7 +55,7 @@ class Ui_MainWindow(object):
         self.submit.setGeometry(QtCore.QRect(560, 90, 51, 51))
         self.submit.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../Desktop/5290109.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap("cor.jpg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.submit.setIcon(icon)
         self.submit.setIconSize(QtCore.QSize(50, 50))
         self.submit.setObjectName("submit")
@@ -91,18 +87,19 @@ class Menu(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.setWindowTitle("Главное меню")
         self.comboBox.addItem('Бинарный поиск')
-        self.binary = BinarySearchVisualizer()
+        self.comboBox.addItem('Jump Search')
+        self.comboBox.addItem('Динамическое программирование')
+        self.binary = BinarySearchVisualizer(self.progressBar)
+        self.jump = JumpSearchVisualizer(self.progressBar)
+        self.dynamic = DynamicVisualizer(self.progressBar)
         self.visualizer_container = QtWidgets.QFrame(self.centralwidget)
         self.visualizer_container.setGeometry(QtCore.QRect(40, 150, 960, 350))  # Размещаем под кнопками
         self.visualizer_container.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
 
-        # Используем Layout, чтобы визуализатор растянулся внутри контейнера
         self.layout = QtWidgets.QVBoxLayout(self.visualizer_container)
         self.layout.setContentsMargins(0, 0, 0, 0)
-        self.layout.addWidget(self.binary)
         self.progressBar.setValue(0)
 
-        # Скрываем его изначально (по желанию)
         self.visualizer_container.hide()
 
 
@@ -113,8 +110,29 @@ class Menu(QMainWindow, Ui_MainWindow):
 
     def real(self):
         if self.comboBox.currentText() == 'Бинарный поиск':
+            old = self.layout.takeAt(0)
+            if old is not None:
+                old.widget().deleteLater()
+            self.progressBar.setValue(0)
+            self.binary = BinarySearchVisualizer(self.progressBar)
+            self.layout.addWidget(self.binary)
             self.visualizer_container.show()
-
+        if self.comboBox.currentText() == 'Jump Search':
+            old = self.layout.takeAt(0)
+            if old is not None:
+                old.widget().deleteLater()
+            self.progressBar.setValue(0)
+            self.jump = JumpSearchVisualizer(self.progressBar)
+            self.layout.addWidget(self.jump)
+            self.visualizer_container.show()
+        if self.comboBox.currentText() == 'Динамическое программирование':
+            old = self.layout.takeAt(0)
+            if old is not None:
+                old.widget().deleteLater()
+            self.progressBar.setValue(0)
+            self.dynamic = DynamicVisualizer(self.progressBar)
+            self.layout.addWidget(self.dynamic)
+            self.visualizer_container.show()
 
 
 if __name__ == '__main__':

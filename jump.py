@@ -5,21 +5,21 @@ from PyQt6.QtCore import QTimer
 from PyQt6.QtGui import QBrush, QColor, QFont
 
 
-class BinarySearchVisualizer(QWidget):
+
+class JumpSearchVisualizer(QWidget):
     def __init__(self, progress):
         super().__init__()
-
         self.progress = progress
+        # Данные
+        self.data = sorted([1, 3, 5, 7, 9, 11, 13, 15, 17, 19])
+        self.target = 15
+        self.step = int(len(self.data) ** 0.5)
+        self.prev = -1
         self.num = 1
-        self.data = sorted([10, 50, 20, 80, 30, 90, 40, 70, 60, 100])
-        self.target = 70
-        self.low = 0
-        self.high = len(self.data) - 1
-        self.mid = -1
 
         # UI элементы
         font = QFont("Arial", 16)
-        self.label = QLabel('Поиск 70')
+        self.label = QLabel('Поиск 15')
         self.label.setFont(font)
         self.scene = QGraphicsScene()
         self.view = QGraphicsView(self.scene)
@@ -36,7 +36,6 @@ class BinarySearchVisualizer(QWidget):
         # Таймер для анимации
         self.timer = QTimer()
         self.timer.timeout.connect(self.search_step)
-
         self.draw_array()
 
     def draw_array(self, color=QColor("blue")):
@@ -47,11 +46,11 @@ class BinarySearchVisualizer(QWidget):
             rect = QGraphicsRectItem(i * (width + 10), 100, width, height)
 
             # Цветовая индикация границ и середины
-            if i == self.mid and self.data[self.mid] == self.target:
+            if i == self.prev  and self.data[self.prev] == self.target:
                 rect.setBrush(QBrush(QColor("green")))
-            elif i == self.mid:
+            elif i == self.prev:
                 rect.setBrush(QBrush(QColor("red")))  # Mid
-            elif self.low <= i <= self.high:
+            elif i > self.prev and self.data[self.prev] != self.target:
                 rect.setBrush(QBrush(QColor("lightblue")))  # Диапазон поиска
             else:
                 rect.setBrush(QBrush(QColor("lightgrey")))  # Вне диапазона
@@ -63,26 +62,29 @@ class BinarySearchVisualizer(QWidget):
             self.scene.addItem(text)
 
 
-
     def start_search(self):
+        self.prev = 0
         self.num = 1
-        self.low = 0
-        self.high = len(self.data) - 1
+        self.progress.setValue(self.num * 25)
+        self.step = int(len(self.data) ** 0.5)
+        self.draw_array()
         self.timer.start(1000)  # Шаг 1 секунда
 
     def search_step(self):
-        self.progress.setValue(self.num * 25)
         self.num += 1
-        if self.low <= self.high:
-            self.mid = (self.low + self.high) // 2
+        self.progress.setValue(self.num * 25)
+        if self.data[min(self.step, len(self.data) - 1)] <= self.target:
+            self.prev = self.step
+            self.step += int(len(self.data) ** 0.5)
             self.draw_array()
-
-            if self.data[self.mid] == self.target:
+            if self.data[self.prev] == self.target:
                 self.timer.stop()
-            elif self.data[self.mid] < self.target:
-                self.low = self.mid + 1
-            else:
-                self.high = self.mid - 1
+            elif self.prev >= len(self.data):
+                self.timer.stop()
         else:
-            self.timer.stop()
-
+            self.prev += 1
+            if self.prev >= len(self.data) or self.data[self.prev] > self.target:
+                self.timer.stop()
+            self.draw_array()
+            if self.data[self.prev] == self.target:
+                self.timer.stop()
