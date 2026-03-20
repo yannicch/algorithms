@@ -33,28 +33,28 @@ class BinarySearchVisualizer(QWidget):
 
         self.setLayout(self.layout)
 
-        # Таймер для анимации
+
         self.timer = QTimer()
         self.timer.timeout.connect(self.search_step)
 
         self.draw_array()
 
-    def draw_array(self, color=QColor("blue")):
+    def draw_array(self):
         self.scene.clear()
         width = 50
         height = 50
         for i, val in enumerate(self.data):
             rect = QGraphicsRectItem(i * (width + 10), 100, width, height)
 
-            # Цветовая индикация границ и середины
+
             if i == self.mid and self.data[self.mid] == self.target:
                 rect.setBrush(QBrush(QColor("green")))
             elif i == self.mid:
-                rect.setBrush(QBrush(QColor("red")))  # Mid
+                rect.setBrush(QBrush(QColor("red")))
             elif self.low <= i <= self.high:
-                rect.setBrush(QBrush(QColor("lightblue")))  # Диапазон поиска
+                rect.setBrush(QBrush(QColor("lightblue")))
             else:
-                rect.setBrush(QBrush(QColor("lightgrey")))  # Вне диапазона
+                rect.setBrush(QBrush(QColor("lightgrey")))
 
             self.scene.addItem(rect)
 
@@ -68,7 +68,7 @@ class BinarySearchVisualizer(QWidget):
         self.num = 1
         self.low = 0
         self.high = len(self.data) - 1
-        self.timer.start(1000)  # Шаг 1 секунда
+        self.timer.start(1000)
 
     def search_step(self):
         self.progress.setValue(self.num * 25)
