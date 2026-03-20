@@ -12,12 +12,11 @@ class DynamicVisualizer(QWidget):
         super().__init__()
         self.progress = progress
         self.point = 2
-        # Данные
         self.data = [0, 0, 0, 0, 0, 0]
         self.percent = ceil(100 / (len(self.data) - 1))
         self.num = 1
 
-        # UI элементы
+
         self.line = QLineEdit(self)
         self.line.setValidator(QIntValidator())
         self.line.setFixedSize(100, 20)
@@ -37,7 +36,7 @@ class DynamicVisualizer(QWidget):
 
         self.setLayout(self.layout)
 
-        # Таймер для анимации
+
         self.timer = QTimer()
         self.timer.timeout.connect(self.search_step)
         self.draw_array()
@@ -77,7 +76,7 @@ class DynamicVisualizer(QWidget):
         self.data[0] = 1
         self.data[1] = 1
         self.draw_array()
-        self.timer.start(1000)  # Шаг 1 секунда
+        self.timer.start(1000)
 
     def search_step(self):
         self.progress.setValue(self.num * self.percent)

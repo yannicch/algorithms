@@ -17,7 +17,7 @@ class JumpSearchVisualizer(QWidget):
         self.prev = -1
         self.num = 1
 
-        # UI элементы
+
         font = QFont("Arial", 16)
         self.label = QLabel('Поиск 15')
         self.label.setFont(font)
@@ -33,27 +33,25 @@ class JumpSearchVisualizer(QWidget):
 
         self.setLayout(self.layout)
 
-        # Таймер для анимации
         self.timer = QTimer()
         self.timer.timeout.connect(self.search_step)
         self.draw_array()
 
-    def draw_array(self, color=QColor("blue")):
+    def draw_array(self):
         self.scene.clear()
         width = 50
         height = 50
         for i, val in enumerate(self.data):
             rect = QGraphicsRectItem(i * (width + 10), 100, width, height)
 
-            # Цветовая индикация границ и середины
             if i == self.prev  and self.data[self.prev] == self.target:
                 rect.setBrush(QBrush(QColor("green")))
             elif i == self.prev:
                 rect.setBrush(QBrush(QColor("red")))  # Mid
             elif i > self.prev and self.data[self.prev] != self.target:
-                rect.setBrush(QBrush(QColor("lightblue")))  # Диапазон поиска
+                rect.setBrush(QBrush(QColor("lightblue")))
             else:
-                rect.setBrush(QBrush(QColor("lightgrey")))  # Вне диапазона
+                rect.setBrush(QBrush(QColor("lightgrey")))
 
             self.scene.addItem(rect)
 

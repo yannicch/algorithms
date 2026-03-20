@@ -17,7 +17,6 @@ class BinarySearchVisualizer(QWidget):
         self.high = len(self.data) - 1
         self.mid = -1
 
-        # UI элементы
         font = QFont("Arial", 16)
         self.label = QLabel('Поиск 70')
         self.label.setFont(font)
