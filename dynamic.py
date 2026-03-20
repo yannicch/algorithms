@@ -3,7 +3,8 @@ from PyQt6.QtWidgets import (QGraphicsView, QGraphicsScene,
                              QWidget, QPushButton, QLabel, QLineEdit)
 from PyQt6.QtCore import QTimer
 from math import ceil
-from PyQt6.QtGui import QBrush, QColor, QFont, QIntValidator
+from PyQt6.QtGui import QBrush, QColor, QFont, QRegularExpressionValidator
+from PyQt6.QtCore import QRegularExpression
 
 
 
@@ -18,7 +19,9 @@ class DynamicVisualizer(QWidget):
 
 
         self.line = QLineEdit(self)
-        self.line.setValidator(QIntValidator())
+        regex = QRegularExpression(r"[1-9]\d*")
+        validator = QRegularExpressionValidator(regex)
+        self.line.setValidator(validator)
         self.line.setFixedSize(100, 20)
         self.lab = QLabel('Введите координату n')
         font = QFont("Arial", 12)
@@ -63,6 +66,7 @@ class DynamicVisualizer(QWidget):
             text = QGraphicsTextItem(str(val))
             text.setPos(i * (width + 10) + 10, 110)
             self.scene.addItem(text)
+
 
 
     def start_search(self):
