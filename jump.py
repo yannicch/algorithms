@@ -10,7 +10,6 @@ class JumpSearchVisualizer(QWidget):
     def __init__(self, progress):
         super().__init__()
         self.progress = progress
-        # Данные
         self.data = sorted([1, 3, 5, 7, 9, 11, 13, 15, 17, 19])
         self.target = 15
         self.step = int(len(self.data) ** 0.5)
