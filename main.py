@@ -87,7 +87,7 @@ class Menu(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.setWindowTitle("Главное меню")
         self.comboBox.addItem('Бинарный поиск')
-        self.comboBox.addItem('Jump Search')
+        self.comboBox.addItem('Поиск прыжками')
         self.comboBox.addItem('Динамическое программирование')
         self.binary = BinarySearchVisualizer(self.progressBar)
         self.jump = JumpSearchVisualizer(self.progressBar)
@@ -117,7 +117,7 @@ class Menu(QMainWindow, Ui_MainWindow):
             self.binary = BinarySearchVisualizer(self.progressBar)
             self.layout.addWidget(self.binary)
             self.visualizer_container.show()
-        if self.comboBox.currentText() == 'Jump Search':
+        if self.comboBox.currentText() == 'Поиск прыжками':
             old = self.layout.takeAt(0)
             if old is not None:
                 old.widget().deleteLater()
