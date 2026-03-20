@@ -46,7 +46,7 @@ class JumpSearchVisualizer(QWidget):
             if i == self.prev  and self.data[self.prev] == self.target:
                 rect.setBrush(QBrush(QColor("green")))
             elif i == self.prev:
-                rect.setBrush(QBrush(QColor("red")))  # Mid
+                rect.setBrush(QBrush(QColor("red")))
             elif i > self.prev and self.data[self.prev] != self.target:
                 rect.setBrush(QBrush(QColor("lightblue")))
             else:
@@ -65,7 +65,7 @@ class JumpSearchVisualizer(QWidget):
         self.progress.setValue(self.num * 25)
         self.step = int(len(self.data) ** 0.5)
         self.draw_array()
-        self.timer.start(1000)  # Шаг 1 секунда
+        self.timer.start(1000)
 
     def search_step(self):
         self.num += 1
