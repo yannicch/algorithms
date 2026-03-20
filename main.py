@@ -93,8 +93,9 @@ class Menu(QMainWindow, Ui_MainWindow):
         self.jump = JumpSearchVisualizer(self.progressBar)
         self.dynamic = DynamicVisualizer(self.progressBar)
         self.visualizer_container = QtWidgets.QFrame(self.centralwidget)
-        self.visualizer_container.setGeometry(QtCore.QRect(40, 150, 960, 350))  # Размещаем под кнопками
+        self.visualizer_container.setGeometry(QtCore.QRect(40, 150, 960, 350))
         self.visualizer_container.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
+        self.setWindowIcon(QtGui.QIcon('sign.ico'))
 
         self.layout = QtWidgets.QVBoxLayout(self.visualizer_container)
         self.layout.setContentsMargins(0, 0, 0, 0)

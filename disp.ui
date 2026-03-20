@@ -154,16 +154,6 @@
      </size>
     </property>
    </widget>
-   <widget class="QListWidget" name="content">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>180</y>
-      <width>1011</width>
-      <height>321</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QProgressBar" name="progressBar">
     <property name="geometry">
      <rect>
@@ -176,17 +166,6 @@
     <property name="value">
      <number>24</number>
     </property>
-   </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>180</y>
-      <width>1011</width>
-      <height>321</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="boxes"/>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
